@@ -1,0 +1,18 @@
+{
+  "name": "game",
+  "version": "2.0.0",
+  "description": "A simple template project to quickly get up and running with Phaser.",
+  "main": "deploy/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "grunt": "^1.3.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-connect": "^3.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-open": "~0.2.3"
+  },
+  "dependencies": {
+  }
+}
