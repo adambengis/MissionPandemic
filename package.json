@@ -1,7 +1,7 @@
 {
-  "name": "game",
-  "version": "2.0.0",
-  "description": "A simple template project to quickly get up and running with Phaser.",
+  "name": "mission_pandemic",
+  "version": "0.0.1",
+  "description": "Live a healthy life by keeping your distance from the potentially pandemic-infected public while completing daily missions and objectives.",
   "main": "deploy/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

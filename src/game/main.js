@@ -1,34 +1,20 @@
-// Our game scene
-class ExampleScene extends Phaser.Scene {
-    constructor(config) {
-        super(config);
-    }
-
-    init(data) {
-        var text = "Phaser Version " + Phaser.VERSION + " works!";
-        var t = this.add.text(0, 0, text);
-    }
-
-    preload() {
-
-    }
-
-    create(data)  {
-
-    }
-
-    update(time, delta) {
-
-    }
-}
-
+// All files in the src/game directory are concatenated on save
+// imports and requires are unnessary, assume all variables are 
+// globally available
 var scene = new ExampleScene("example");
 
 var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene : scene
+    scene : scene,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { z: 300 },
+            debug: false
+        }
+    }
 };
 
 
