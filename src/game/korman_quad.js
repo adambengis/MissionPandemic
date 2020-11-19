@@ -27,8 +27,10 @@ class KormanQuad extends Phaser.Scene {
 
     create(data)  {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
+        
         this.loseText = this.add.text(400, 300, "You Lost!", { fontSize: "24px", color: "red" });
         this.loseText.setVisible(false);
+
         const borders = this.physics.add.staticGroup();
         // start zone
         borders.create(162, 170, null).setVisible(false).setSize(10, 10).setName("start");
@@ -46,6 +48,7 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.npc1, this.touchNPC, null, this);
         this.physics.add.overlap(this.player, this.npc2, this.touchNPC, null, this);
         this.physics.add.overlap(this.player, this.npc3, this.touchNPC, null, this);
+
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
         this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
         
@@ -80,14 +83,17 @@ class KormanQuad extends Phaser.Scene {
           this.player.setVelocityY(0);
       }
       
+      if(this.infectionLevel >= 100)
+      {
+          this.gameOver = true;
+          
+      }
+      
+      this.infectionText.text = "Infection: " + this.infectionLevel;
     }
 
     updateOutOfGame(time, delta) {
-        if(this.infectionLevel >= 100)
-        {
-            this.gameOver;
-            this.loseText.setVisible(true);
-        }
+        this.loseText.setVisible(true);
     }
 
     update(time, delta) {
@@ -98,8 +104,6 @@ class KormanQuad extends Phaser.Scene {
           this.updateOutOfGame(time, delta);
         }
 
-        
-        this.infectionText.text = "Infection: " + this.infectionLevel;
     }
 
     touchNPC(player, npc)
