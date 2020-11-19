@@ -9,6 +9,7 @@ class KormanQuad extends Phaser.Scene {
         this.load.image("npc1", "../assets/characters/yellow_woman_top.svg");
         this.load.image("npc2", "../assets/characters/blue_man_top.svg");
         this.load.image("npc3", "../assets/characters/red_woman_top.svg");
+        this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
     }
 
     init(data) {
@@ -18,7 +19,7 @@ class KormanQuad extends Phaser.Scene {
     collideCb(objA, objB) {
         if((objA.name === "player" && objB.name === "end")
             || (objB.name === "player" && objA.name === "end")) {
-            this.add.text(400, 300, "Success!", { color: "green" });
+            this.add.text(400, 300, "You Win!", { color: "green" });
             this.gameOver = true;
             this.player.setVelocityX(0).setVelocityY(0);
         }
@@ -28,10 +29,10 @@ class KormanQuad extends Phaser.Scene {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
 
         const borders = this.physics.add.staticGroup();
-        // bottom left green
-        borders.create(125, 352, null).setVisible(false).setSize(150, 150).setName("start");
-        // top right yellow
-        borders.create(632, 80, null).setVisible(false).setSize(185, 145).setName("end");
+        // start zone
+        borders.create(162, 170, null).setVisible(false).setSize(10, 10).setName("start");
+        // end zone
+        borders.create(290, 420, null).setVisible(false).setSize(10, 10).setName("end");
 
         this.player = this.physics.add.sprite(161, 171, 'player').setScale(0.25).setAngle(180).setName("player");
         this.player.setCollideWorldBounds(true);
@@ -41,6 +42,10 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.sprite(302, 144, 'npc1').setScale(0.25).setAngle(180);
         this.physics.add.sprite(295, 342, 'npc2').setScale(0.25).setAngle(90);
         this.physics.add.sprite(345, 376, 'npc3').setScale(0.25).setAngle(0);
+
+        this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
+        this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
+
     }
 
     updateGameplay(time, delta) {
@@ -68,6 +73,7 @@ class KormanQuad extends Phaser.Scene {
       else {
           this.player.setVelocityY(0);
       }
+      
     }
 
     updateOutOfGame(time, delta) {
@@ -81,5 +87,10 @@ class KormanQuad extends Phaser.Scene {
         else {
           this.updateOutOfGame(time, delta);
         }
+    }
+    collectHandSanitizer (player, handsan)
+    {
+        this.handsan.disableBody(true, true);
+
     }
 }
