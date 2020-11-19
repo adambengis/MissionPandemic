@@ -53,7 +53,7 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
         
         this.infectionLevel = 0;
-        this.infectionText = this.add.text(600, 550, "Infection: 0", {fontSize: "24px", color: "red"});
+        this.infectionText = this.add.text(580, 550, "Infection: 0", {fontSize: "24px", color: "red"});
         
     }
 
@@ -86,6 +86,7 @@ class KormanQuad extends Phaser.Scene {
       if(this.infectionLevel >= 100)
       {
           this.gameOver = true;
+          this.loseText.setVisible(true);
           
       }
       
@@ -93,7 +94,7 @@ class KormanQuad extends Phaser.Scene {
     }
 
     updateOutOfGame(time, delta) {
-        this.loseText.setVisible(true);
+        
     }
 
     update(time, delta) {
