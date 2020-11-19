@@ -1,7 +1,7 @@
 // All files in the src/game directory are concatenated on save
 // imports and requires are unnessary, assume all variables are 
 // globally available
-var scene = new ExampleScene("example");
+var scene = new KormanQuad("Korman Quad");
 
 var config = {
     type: Phaser.AUTO,
