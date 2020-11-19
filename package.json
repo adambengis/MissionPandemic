@@ -4,6 +4,7 @@
   "description": "Live a healthy life by keeping your distance from the potentially pandemic-infected public while completing daily missions and objectives.",
   "main": "deploy/index.html",
   "scripts": {
+    "lint": "lynt src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -11,7 +12,8 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-connect": "^3.0.0",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-open": "~0.2.3"
+    "grunt-open": "~0.2.3",
+    "lynt": "^0.5.5"
   },
   "dependencies": {}
 }

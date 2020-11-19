@@ -1,14 +1,11 @@
 class KormanQuad extends Phaser.Scene {
-    constructor(config) {
-        super(config);
-    }
-
     preload() {
         this.load.image("background", "../assets/backgrounds/korman_quad.jpg");
         this.load.image("player", "../assets/characters/red_man_top.svg");
         this.load.image("npc1", "../assets/characters/yellow_woman_top.svg");
         this.load.image("npc2", "../assets/characters/blue_man_top.svg");
         this.load.image("npc3", "../assets/characters/red_woman_top.svg");
+        this.load.image("inf_bar", "../assets/icons/infection_bar.svg");
     }
 
     init(data) {
@@ -27,41 +24,70 @@ class KormanQuad extends Phaser.Scene {
     create(data)  {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
 
-        const borders = this.physics.add.staticGroup();
-        // bottom left green
-        borders.create(125, 352, null).setVisible(false).setSize(150, 150).setName("start");
-        // top right yellow
-        borders.create(632, 80, null).setVisible(false).setSize(185, 145).setName("end");
 
-        this.player = this.physics.add.sprite(161, 171, 'player').setScale(0.25).setAngle(180).setName("player");
+        this.player = this.physics.add.sprite(161, 171, 'player')
+          .setScale(0.25)
+          .setAngle(180)
+          .setName("player")
+          .setData("infection_level", 0);
         this.player.setCollideWorldBounds(true);
+
+        this.add.image(400, 550, "inf_bar").setScale(2);
+        this.graphics = this.add.graphics();
+
+        const borders = this.physics.add.staticGroup();
         this.physics.add.collider(this.player, borders, (objA, objB) => this.collideCb(objA, objB));
 
+        const npcs = this.physics.add.staticGroup();
+        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180);
+        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90);
+        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0);
+        
+        this.cursors = this.input.keyboard.createCursorKeys();
+    }
 
-        this.physics.add.sprite(302, 144, 'npc1').setScale(0.25).setAngle(180);
-        this.physics.add.sprite(295, 342, 'npc2').setScale(0.25).setAngle(90);
-        this.physics.add.sprite(345, 376, 'npc3').setScale(0.25).setAngle(0);
+    incrPlayerInfectionLevel(incr) {
+      if(incr == 0) return;
+
+      const inf_level = this.player.getData("infection_level");
+      let new_inf_level = inf_level + incr;
+      this.graphics.fillStyle(0xffff00, 1);
+
+      if(incr > 0) {
+        if(new_inf_level > 100) new_inf_level = 100;
+        for(let i = inf_level; i < new_inf_level; i++) {
+          this.graphics.fillCircle(400+115*(i/55-1), 549, 14);
+        }
+      } else {
+        if(new_inf_level < 0) new_inf_level = 0;
+        this.graphics.clear();
+        for(let i = 0; i < new_inf_level; i++) {
+          this.graphics.fillCircle(400+115*(i/55-1), 549, 14);
+        }
+      }
+      this.player.setData({
+        "infection_level": new_inf_level,
+      });
     }
 
     updateGameplay(time, delta) {
-      const cursors = this.input.keyboard.createCursorKeys();
-
-      if (cursors.left.isDown) {
+      // player movement
+      if (this.cursors.left.isDown) {
           this.player.setVelocityX(-160);
           this.player.setAngle(-90);
       }
-      else if (cursors.right.isDown) {
+      else if (this.cursors.right.isDown) {
           this.player.setVelocityX(160);
           this.player.setAngle(90);
       }
       else {
           this.player.setVelocityX(0);
       }
-      if (cursors.up.isDown) {
+      if (this.cursors.up.isDown) {
           this.player.setVelocityY(-160);
           this.player.setAngle(0);
       }
-      else if (cursors.down.isDown) {
+      else if (this.cursors.down.isDown) {
           this.player.setVelocityY(160);
           this.player.setAngle(180);
       }

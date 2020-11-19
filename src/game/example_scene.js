@@ -1,8 +1,4 @@
 class ExampleScene extends Phaser.Scene {
-    constructor(config) {
-        super(config);
-    }
-
     preload() {
         this.load.image("level_bg", "../assets/level_t.png");
         this.load.image("player", "../assets/Player2.svg");
