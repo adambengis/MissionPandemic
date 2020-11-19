@@ -13,6 +13,5 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-open": "~0.2.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

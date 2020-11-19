@@ -5,7 +5,7 @@ class ExampleScene extends Phaser.Scene {
 
     preload() {
         this.load.image("level_bg", "../assets/level_t.png");
-        this.load.image("player", "../assets/player_top.png");
+        this.load.image("player", "../assets/Player2.svg");
         this.load.image("npc", "../assets/npc_top.png");
     }
 
@@ -35,6 +35,7 @@ class ExampleScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.player, borders, (objA, objB) => this.collideCb(objA, objB));
+
     }
 
     update(time, delta) {
@@ -43,18 +44,22 @@ class ExampleScene extends Phaser.Scene {
 
             if (cursors.left.isDown) {
                 this.player.setVelocityX(-160);
+                this.player.angle = -90;
             }
             else if (cursors.right.isDown) {
                 this.player.setVelocityX(160);
+                this.player.angle = 90;
             }
             else {
                 this.player.setVelocityX(0);
             }
             if (cursors.up.isDown) {
                 this.player.setVelocityY(-160);
+                this.player.angle = 0;
             }
             else if (cursors.down.isDown) {
                 this.player.setVelocityY(160);
+                this.player.angle = 180;
             }
             else {
                 this.player.setVelocityY(0);
