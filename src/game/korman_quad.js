@@ -27,15 +27,14 @@ class KormanQuad extends Phaser.Scene {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
 
         const barriers = this.physics.add.staticGroup();
-        barriers.create(161, 100).setSize(240, 120);
+        barriers.create(161, 100).setSize(240, 100);
         barriers.create(435, 160).setSize(160, 250);
         barriers.create(130, 340).setSize(250, 230);
         barriers.create(350, 488).setSize(100, 100).setCircle(50);
         barriers.create(590, 490).setSize(190, 250);
+        barriers.setVisible(false);
 
         const zones = this.physics.add.staticGroup();
-        // start zone
-        zones.create(162, 170).setVisible(false).setSize(10, 10).setName("start");
         // end zone
         zones.create(285, 410, "endpoint")
           .setSize(1, 1)
