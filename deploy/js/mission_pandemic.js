@@ -220,7 +220,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: { z: 300 },
-            debug: true
+            debug: false
         }
     }
 };
