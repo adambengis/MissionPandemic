@@ -53,13 +53,17 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
 
         const infectionTextStyle = {fontSize: "18px", color: "black"};
-        this.add.text(260, 570, "Infection Potential:", infectionTextStyle);
-        this.infectionText = this.add.text(482, 570, "0%", infectionTextStyle);
+        this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
+        this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     incrPlayerInfectionLevel(incr) {
       if(incr == 0 || this.gameOver) return;
+
+      const drawHealthCircle = health => (
+        this.graphics.fillCircle(412+119*(health/55-1), 550, 14)
+      );
 
       const inf_level = this.player.getData("infection_level");
       let new_inf_level = inf_level + incr;
@@ -69,14 +73,14 @@ class KormanQuad extends Phaser.Scene {
         if(new_inf_level > 100) new_inf_level = 100;
 
         for(let i = inf_level; i < new_inf_level; i++) {
-          this.graphics.fillCircle(400+115*(i/55-1), 549, 14);
+          drawHealthCircle(i);
         }
       } else {
         if(new_inf_level < 0) new_inf_level = 0;
 
         this.graphics.clear();
         for(let i = 0; i < new_inf_level; i++) {
-          this.graphics.fillCircle(400+115*(i/55-1), 549, 14);
+          drawHealthCircle(i);
         }
       }
       this.player.setData("infection_level", new_inf_level); 
