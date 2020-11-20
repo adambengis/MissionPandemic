@@ -90,11 +90,19 @@ class KormanQuad extends Phaser.Scene {
 
     create(data)  {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
-        const borders = this.physics.add.staticGroup();
+
+        const barriers = this.physics.add.staticGroup();
+        barriers.create(161, 100).setSize(240, 120);
+        barriers.create(435, 160).setSize(160, 250);
+        barriers.create(130, 340).setSize(250, 230);
+        barriers.create(350, 488).setSize(100, 100).setCircle(50);
+        barriers.create(590, 490).setSize(190, 250);
+
+        const zones = this.physics.add.staticGroup();
         // start zone
-        borders.create(162, 170).setVisible(false).setSize(10, 10).setName("start");
+        zones.create(162, 170).setVisible(false).setSize(10, 10).setName("start");
         // end zone
-        borders.create(285, 410, "endpoint")
+        zones.create(285, 410, "endpoint")
           .setSize(1, 1)
           .setDisplaySize(25, 25)
           .setName("end");
@@ -105,10 +113,10 @@ class KormanQuad extends Phaser.Scene {
           .setCircle(75)
           .setName("player")
           .setData("infection_level", 0);
+
         this.player.setCollideWorldBounds(true);
-
-
-        this.physics.add.collider(this.player, borders, (objA, objB) => this.collideCb(objA, objB));
+        this.physics.add.collider(this.player, barriers);
+        this.physics.add.collider(this.player, zones, (objA, objB) => this.collideCb(objA, objB));
 
         const npcs = this.physics.add.staticGroup();
         npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180).setCircle(70);
@@ -229,7 +237,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: { z: 300 },
-            debug: true
+            debug: false
         }
     }
 };
