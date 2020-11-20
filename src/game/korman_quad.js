@@ -7,6 +7,7 @@ class KormanQuad extends Phaser.Scene {
         this.load.image("npc3", "../assets/characters/red_woman_top.svg");
         this.load.image("inf_bar", "../assets/icons/infection_bar.svg");
         this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
+        this.load.image("endpoint", "../assets/icons/endpoint.svg");
     }
 
     init(data) {
@@ -26,9 +27,12 @@ class KormanQuad extends Phaser.Scene {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
         const borders = this.physics.add.staticGroup();
         // start zone
-        borders.create(162, 170, null).setVisible(false).setSize(10, 10).setName("start");
+        borders.create(162, 170).setVisible(false).setSize(10, 10).setName("start");
         // end zone
-        borders.create(290, 420, null).setVisible(false).setSize(10, 10).setName("end");
+        borders.create(285, 410, "endpoint")
+          .setSize(1, 1)
+          .setDisplaySize(25, 25)
+          .setName("end");
 
         this.player = this.physics.add.sprite(161, 171, 'player')
           .setScale(0.25)
@@ -38,8 +42,6 @@ class KormanQuad extends Phaser.Scene {
           .setData("infection_level", 0);
         this.player.setCollideWorldBounds(true);
 
-        this.add.image(400, 550, "inf_bar").setScale(2);
-        this.graphics = this.add.graphics();
 
         this.physics.add.collider(this.player, borders, (objA, objB) => this.collideCb(objA, objB));
 
@@ -52,9 +54,12 @@ class KormanQuad extends Phaser.Scene {
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
         this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
 
+        
+        this.add.image(400, 550, "inf_bar").setScale(2);
         const infectionTextStyle = {fontSize: "18px", color: "black"};
         this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
         this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
+        this.graphics = this.add.graphics();
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
