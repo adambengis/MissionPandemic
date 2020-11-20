@@ -1,8 +1,7 @@
 class ExampleScene extends Phaser.Scene {
     preload() {
-        this.load.image("level_bg", "../assets/level_t.png");
-        this.load.image("player", "../assets/Player2.svg");
-        this.load.image("npc", "../assets/npc_top.png");
+        this.load.image("background", "../assets/backgrounds/example.png");
+        this.load.image("player", "../assets/characters/red_man_mask_top.svg");
     }
 
     init(data) {
@@ -19,7 +18,7 @@ class ExampleScene extends Phaser.Scene {
     }
 
     create(data)  {
-        this.add.image(400, 300, "level_bg").setDisplaySize(800, 600);
+        this.add.image(400, 300, "background").setDisplaySize(800, 600);
 
         const borders = this.physics.add.staticGroup();
         // bottom left green

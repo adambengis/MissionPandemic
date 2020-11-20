@@ -33,6 +33,7 @@ class KormanQuad extends Phaser.Scene {
         this.player = this.physics.add.sprite(161, 171, 'player')
           .setScale(0.25)
           .setAngle(180)
+          .setCircle(75)
           .setName("player")
           .setData("infection_level", 0);
         this.player.setCollideWorldBounds(true);
@@ -43,9 +44,9 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.collider(this.player, borders, (objA, objB) => this.collideCb(objA, objB));
 
         const npcs = this.physics.add.staticGroup();
-        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180);
-        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90);
-        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0);
+        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180).setCircle(70);
+        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90).setCircle(70);
+        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0).setCircle(70);
         this.physics.add.overlap(this.player, npcs, () => this.touchNPC());
 
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
@@ -58,7 +59,7 @@ class KormanQuad extends Phaser.Scene {
     }
 
     incrPlayerInfectionLevel(incr) {
-      if(incr == 0) return;
+      if(incr == 0 || this.gameOver) return;
 
       const inf_level = this.player.getData("infection_level");
       let new_inf_level = inf_level + incr;
