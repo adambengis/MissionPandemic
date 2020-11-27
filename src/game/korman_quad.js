@@ -1,10 +1,10 @@
 class KormanQuad extends Phaser.Scene {
     preload() {
         this.load.image("background", "../assets/backgrounds/korman_quad.jpg");
-        this.load.image("player", "../assets/characters/red_man_top.svg");
-        this.load.image("npc1", "../assets/characters/yellow_woman_top.svg");
-        this.load.image("npc2", "../assets/characters/blue_man_top.svg");
-        this.load.image("npc3", "../assets/characters/red_woman_top.svg");
+        this.load.image("player", "../assets/characters/red_man_mask_top.svg");
+        this.load.image("npc1", "../assets/characters/blue_man_top.svg");
+        this.load.image("npc2", "../assets/characters/red_woman_mask_top.svg");
+        this.load.image("npc3", "../assets/characters/yellow_woman_mask_top.svg");
         this.load.image("inf_bar", "../assets/icons/infection_bar.svg");
         this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
         this.load.image("endpoint", "../assets/icons/endpoint.svg");
@@ -14,13 +14,17 @@ class KormanQuad extends Phaser.Scene {
         this.gameOver = false;
     }
 
-    collideCb(objA, objB) {
-        if((objA.name === "player" && objB.name === "end")
-            || (objB.name === "player" && objA.name === "end")) {
+    collideZone(player, zone) {
+        if(zone.name === "end") {
             this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
             this.gameOver = true;
             this.player.setVelocityX(0).setVelocityY(0);
         }
+    }
+
+    nearNpc(player, npc)
+    {
+      this.incrPlayerInfectionLevel(npc.getData("mask") ? 0.5 : 1.5);
     }
 
     create(data)  {
@@ -50,13 +54,16 @@ class KormanQuad extends Phaser.Scene {
 
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, barriers);
-        this.physics.add.collider(this.player, zones, (objA, objB) => this.collideCb(objA, objB));
+        this.physics.add.collider(this.player, zones, (player, zone) => this.collideZone(player, zone));
 
         const npcs = this.physics.add.staticGroup();
-        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180).setCircle(70);
-        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90).setCircle(70);
-        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0).setCircle(70);
-        this.physics.add.overlap(this.player, npcs, () => this.touchNPC());
+        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180).setCircle(70)
+          .setData("mask", false);
+        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90).setCircle(60)
+          .setData("mask", true);
+        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0).setCircle(60)
+          .setData("mask", true);
+        this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
         this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
@@ -144,11 +151,6 @@ class KormanQuad extends Phaser.Scene {
       }
 
       this.infectionText.setText(`${this.player.getData("infection_level")}%`);
-    }
-
-    touchNPC(player, npc)
-    {
-        this.incrPlayerInfectionLevel(1);
     }
 
     collectHandSanitizer (player, handsan)
