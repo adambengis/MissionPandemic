@@ -1,6 +1,12 @@
 class KormanQuad extends Phaser.Scene {
+
+    constructor()
+    {
+      super('KormanQuad');
+    }
     preload() {
         this.load.image("background", "../assets/backgrounds/korman_quad.jpg");
+        this.load.image("background2", "../assets/backgrounds/lancaster_walk800x600.png");
         this.load.image("player", "../assets/characters/red_man_mask_top.svg");
         this.load.image("npc1", "../assets/characters/blue_man_top.svg");
         this.load.image("npc2", "../assets/characters/red_woman_mask_top.svg");
@@ -11,14 +17,17 @@ class KormanQuad extends Phaser.Scene {
     }
 
     init(data) {
-        this.gameOver = false;
+
+      this.gameOver = false;
     }
 
     collideZone(player, zone) {
         if(zone.name === "end") {
-            this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
-            this.gameOver = true;
-            this.player.setVelocityX(0).setVelocityY(0);
+            this.scene.start('LancasterWalk');
+            //this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
+            //this.gameOver = true;
+            //this.player.setVelocityX(0).setVelocityY(0);
+
         }
     }
 
@@ -74,6 +83,7 @@ class KormanQuad extends Phaser.Scene {
         this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
         this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
         this.graphics = this.add.graphics();
+        
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
@@ -159,3 +169,4 @@ class KormanQuad extends Phaser.Scene {
         this.incrPlayerInfectionLevel(-100);
     }
 }
+

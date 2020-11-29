@@ -7,7 +7,7 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene : scene,
+    scene : [ KormanQuad, LancasterWalk ],
     physics: {
         default: 'arcade',
         arcade: {
