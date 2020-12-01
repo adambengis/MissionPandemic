@@ -1,13 +1,14 @@
 // All files in the src/game directory are concatenated on save
 // imports and requires are unnessary, assume all variables are 
 // globally available
-const scene = new KormanQuad("Korman Quad");
+const korman = new KormanQuad("KormanQuad");
+const lancaster = new LancasterWalk("LancasterWalk");
 
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene : [ KormanQuad, LancasterWalk ],
+    scene : [ korman, lancaster ],
     physics: {
         default: 'arcade',
         arcade: {

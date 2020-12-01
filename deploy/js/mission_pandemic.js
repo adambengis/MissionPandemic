@@ -245,17 +245,19 @@ class LancasterWalk extends Phaser.Scene {
       super('LancasterWalk');
   }
   init(data) {
-
     this.gameOver = false;
   }
 
   collideZone(player, zone) {
-      if(zone.name === "end") {
-          this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
-          this.gameOver = true;
-          this.player.setVelocityX(0).setVelocityY(0);
+    if (zone.name === "end") {
+      this.add.text(400, 300, "You Win!", {
+        fontSize: "24px",
+        color: "green"
+      });
+      this.gameOver = true;
+      this.player.setVelocityX(0).setVelocityY(0);
 
-      }
+    }
   }
 
   nearNpc(player, npc)
@@ -267,12 +269,24 @@ class LancasterWalk extends Phaser.Scene {
       this.add.image(400, 300, "background2").setDisplaySize(800, 600);
 
       const barriers = this.physics.add.staticGroup();
-      //barriers.create(161, 100).setSize(240, 100);
-      //barriers.create(435, 160).setSize(160, 250);
-      //barriers.create(130, 340).setSize(250, 230);
-      //barriers.create(350, 488).setSize(100, 100).setCircle(50);
-      //barriers.create(590, 490).setSize(190, 250);
-      //barriers.setVisible(true);
+      barriers.create(245, 498).setSize(260, 200);
+      barriers.create(45, 450).setSize(62, 220);
+      // FIXME: you can clip into the building by pushing on the tree
+      barriers.create(358, 373).setSize(70, 70).setCircle(25);
+      barriers.create(198, 290).setSize(70, 70).setCircle(25);
+      barriers.create(78, 223).setSize(120, 120).setCircle(54);
+      barriers.create(265, 58).setSize(400, 80);
+      barriers.create(712, 310).setSize(66, 220);
+      barriers.create(390, 210).setSize(70, 70).setCircle(30);
+      barriers.create(445, 190).setSize(20, 20).setCircle(10);
+      barriers.create(430, 210).setSize(20, 20).setCircle(10);
+      barriers.create(415, 230).setSize(20, 20).setCircle(10);
+      barriers.create(502, 230).setSize(50, 50).setCircle(40);
+      barriers.create(532, 195).setSize(50, 50).setCircle(40);
+      barriers.create(544, 450).setSize(100, 100).setCircle(45);
+      barriers.create(676, 566).setSize(100, 100).setCircle(45);
+      barriers.create(447, 420).setSize(30, 160);
+      barriers.setVisible(false);
 
       const zones = this.physics.add.staticGroup();
       // end zone
@@ -295,13 +309,17 @@ class LancasterWalk extends Phaser.Scene {
       const npcs = this.physics.add.staticGroup();
       npcs.create(620, 160, 'npc1').setScale(0.25).setAngle(180).setCircle(70)
         .setData("mask", false);
-      npcs.create(320, 305, 'npc2').setScale(0.25).setAngle(90).setCircle(60)
-        .setData("mask", true);
+      npcs.create(290, 305, 'npc1').setScale(0.25).setAngle(-90).setCircle(60)
+        .setData("mask", false);
       npcs.create(345, 265, 'npc3').setScale(0.25).setAngle(0).setCircle(60)
+        .setData("mask", true);
+      npcs.create(550, 150, 'npc2').setScale(0.25).setAngle(-90).setCircle(60)
+        .setData("mask", true);
+      npcs.create(490, 325, 'npc2').setScale(0.25).setAngle(90).setCircle(60)
         .setData("mask", true);
       this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
-      this.handsan = this.physics.add.sprite(20, 123, 'handsan').setScale(0.25);
+      this.handsan = this.physics.add.sprite(35, 580, 'handsan').setScale(0.20);
       this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
 
       
@@ -400,13 +418,14 @@ class LancasterWalk extends Phaser.Scene {
 // All files in the src/game directory are concatenated on save
 // imports and requires are unnessary, assume all variables are 
 // globally available
-const scene = new KormanQuad("Korman Quad");
+const korman = new KormanQuad("KormanQuad");
+const lancaster = new LancasterWalk("LancasterWalk");
 
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene : [ KormanQuad, LancasterWalk ],
+    scene : [ korman, lancaster ],
     physics: {
         default: 'arcade',
         arcade: {
