@@ -7,6 +7,7 @@ class KormanQuad extends Phaser.Scene {
     preload() {
         this.load.image("background", "../assets/backgrounds/korman_quad.jpg");
         this.load.image("background2", "../assets/backgrounds/lancaster_walk800x600.png");
+        this.load.image("background3", "../assets/backgrounds/race_lawn800x600.png");
         this.load.image("player", "../assets/characters/red_man_mask_top.svg");
         this.load.image("npc1", "../assets/characters/blue_man_top.svg");
         this.load.image("npc2", "../assets/characters/red_woman_mask_top.svg");
@@ -14,6 +15,7 @@ class KormanQuad extends Phaser.Scene {
         this.load.image("inf_bar", "../assets/icons/infection_bar.svg");
         this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
         this.load.image("endpoint", "../assets/icons/endpoint.svg");
+        this.load.image("losescreen", "../assets/end/losescreen.png")
     }
 
     init(data) {
@@ -143,7 +145,7 @@ class KormanQuad extends Phaser.Scene {
       if(this.player.getData("infection_level") >= 100)
       {
         this.gameOver = true;
-        this.loseText = this.add.text(400, 300, "You Lost!", { fontSize: "24px", color: "red" });
+        this.loseText = this.add.image(400, 300, "losescreen").setDisplaySize(800, 600);
         this.player.setVelocityX(0).setVelocityY(0);
       }
     }

@@ -3,6 +3,7 @@
 // globally available
 const korman = new KormanQuad("KormanQuad");
 const lancaster = new LancasterWalk("LancasterWalk");
+const race = new RaceLawn("RaceLawn");
 
 const config = {
     type: Phaser.AUTO,
