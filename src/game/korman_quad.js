@@ -69,13 +69,65 @@ class KormanQuad extends Phaser.Scene {
         this.physics.add.collider(this.player, barriers);
         this.physics.add.collider(this.player, zones, (player, zone) => this.collideZone(player, zone));
 
-        const npcs = this.physics.add.staticGroup();
-        npcs.create(302, 144, 'npc1').setScale(0.25).setAngle(180).setCircle(70)
+
+        const npcs = this.physics.add.group();
+        const npc1 = npcs.create(302, 144, 'npc1')
+          .setScale(0.25)
+          .setAngle(180)
+          .setOffset(-75, -75)
+          .setCircle(150)
           .setData("mask", false);
-        npcs.create(295, 342, 'npc2').setScale(0.25).setAngle(90).setCircle(60)
+        this.tweens.add({
+          targets: npc1,
+          props: {
+            y: { from: npc1.y, to: npc1.y+100 },
+          },
+          flipY: true,
+          flipX: true,
+          ease: 'Linear',      
+          duration: 1800 - this.level * 400,
+          repeat: -1,       
+          yoyo: true
+        });
+        const npc2 = npcs.create(295, 402, 'npc2')
+          .setScale(0.25)
+          .setAngle(0)          
+          .setOffset(-75, -75)
+          .setCircle(150)
           .setData("mask", true);
-        npcs.create(345, 376, 'npc3').setScale(0.25).setAngle(0).setCircle(60)
+        this.tweens.add({
+          targets: npc2,
+          props: {
+            y: { from: npc2.y, to: npc2.y-100 },
+          },
+          flipY: true,
+          flipX: true,
+          ease: 'Linear',      
+          duration: 1800 - this.level * 400,
+          repeat: -1,       
+          yoyo: true
+        });
+        const npc3 = npcs.create(345, 376, 'npc3')
+          .setScale(0.25)
+          .setAngle(45)
+          .setOffset(-75, -75)
+          .setCircle(150)
           .setData("mask", true);
+        this.tweens.add({
+          targets: npc3,
+          props: {
+            x: { from: npc3.x, to: npc3.x+100 },
+            y: { from: npc3.y, to: npc3.y-40 },
+            // flipX, flipY called per attribute
+            fake: {from: 0, to: 0}
+          },
+          flipX: true,
+          flipY: true,
+          ease: 'Linear',      
+          duration: 1800 - this.level * 400,
+          repeat: -1,       
+          yoyo: true
+        });
         this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
