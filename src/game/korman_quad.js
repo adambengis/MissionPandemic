@@ -21,14 +21,17 @@ class KormanQuad extends Phaser.Scene {
     init(data) {
       this.gameOver = false;
       this.level = data.level;
+      if(this.level == undefined)
+      {
+        this.level = 1;
+      }
+      
     }
 
     collideZone(player, zone) {
         if(zone.name === "end") {
-          if(this.level)
-            this.scene.start('LancasterWalk', { level: this.level });
-          else
-            this.scene.start('LancasterWalk', { level: 1 });
+          this.scene.start('LancasterWalk', { level: this.level });
+
             //this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
             //this.gameOver = true;
             //this.player.setVelocityX(0).setVelocityY(0);
@@ -43,7 +46,7 @@ class KormanQuad extends Phaser.Scene {
 
     create(data)  {
         this.add.image(400, 300, "background").setDisplaySize(800, 600);
-
+        
         const barriers = this.physics.add.staticGroup();
         barriers.create(161, 100).setSize(240, 100);
         barriers.create(435, 160).setSize(160, 250);
@@ -90,6 +93,8 @@ class KormanQuad extends Phaser.Scene {
         this.graphics = this.add.graphics();
         
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red" });
     }
 
     incrPlayerInfectionLevel(incr) {
@@ -121,6 +126,7 @@ class KormanQuad extends Phaser.Scene {
     }
 
     updateGameplay(time, delta) {
+      console.log(this.level);
       // player movement
       if (this.cursors.left.isDown) {
           this.player.setVelocityX(-160);

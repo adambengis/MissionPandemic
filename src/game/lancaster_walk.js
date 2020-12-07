@@ -85,6 +85,8 @@ class LancasterWalk extends Phaser.Scene {
       this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
       this.graphics = this.add.graphics();
 
+      this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red" });
+
       this.cursors = this.input.keyboard.createCursorKeys();
   }
 

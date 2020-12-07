@@ -11,7 +11,8 @@ class RaceLawn extends Phaser.Scene {
 
   collideZone(player, zone) {
     if (zone.name === "end") {
-      this.scene.start('KormanQuad');
+      this.level += 1;
+      this.scene.start('KormanQuad', {level: this.level});
 
     }
   }
@@ -94,13 +95,15 @@ class RaceLawn extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
     this.physics.add.overlap(this.player, this.handsan2, this.collectHandSanitizer, null, this);
       
-      this.add.image(400, 550, "inf_bar").setScale(2);
-      const infectionTextStyle = {fontSize: "18px", color: "black"};
-      this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
-      this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
-      this.graphics = this.add.graphics();
+    this.add.image(400, 550, "inf_bar").setScale(2);
+    const infectionTextStyle = {fontSize: "18px", color: "black"};
+    this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
+    this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
+    this.graphics = this.add.graphics();
 
-      this.cursors = this.input.keyboard.createCursorKeys();
+    this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red" });
+
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   incrPlayerInfectionLevel(incr) {
