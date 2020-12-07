@@ -19,7 +19,8 @@ class RaceLawn extends Phaser.Scene {
 
   nearNpc(player, npc)
   {
-    this.incrPlayerInfectionLevel(npc.getData("mask") ? 0.5 : 1.5);
+      const pain = npc.getData("mask") ? 0.25 : 0.4;
+      this.incrPlayerInfectionLevel(pain * (1 + this.level / 4));
   }
 
   create(data)  {
@@ -179,7 +180,7 @@ class RaceLawn extends Phaser.Scene {
       this.updateOutOfGame(time, delta);
     }
 
-    this.infectionText.setText(`${this.player.getData("infection_level")}%`);
+    this.infectionText.setText(`${Phaser.Math.RoundTo(this.player.getData("infection_level"))}%`);
   }
 
   collectHandSanitizer (player, handsan)

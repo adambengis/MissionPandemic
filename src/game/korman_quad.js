@@ -29,19 +29,15 @@ class KormanQuad extends Phaser.Scene {
     }
 
     collideZone(player, zone) {
-        if(zone.name === "end") {
-          this.scene.start('LancasterWalk', { level: this.level });
-
-            //this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
-            //this.gameOver = true;
-            //this.player.setVelocityX(0).setVelocityY(0);
-
-        }
+      if(zone.name === "end") {
+        this.scene.start('LancasterWalk', { level: this.level });
+      }
     }
 
     nearNpc(player, npc)
     {
-      this.incrPlayerInfectionLevel(npc.getData("mask") ? 0.5 : 1.5);
+      const pain = npc.getData("mask") ? 0.25 : 0.4;
+      this.incrPlayerInfectionLevel(pain * (1 + this.level / 4));
     }
 
     create(data)  {
@@ -170,7 +166,7 @@ class KormanQuad extends Phaser.Scene {
         this.updateOutOfGame(time, delta);
       }
 
-      this.infectionText.setText(`${this.player.getData("infection_level")}%`);
+      this.infectionText.setText(`${Phaser.Math.RoundTo(this.player.getData("infection_level"))}%`);
     }
 
     collectHandSanitizer (player, handsan)
