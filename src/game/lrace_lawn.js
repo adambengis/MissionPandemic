@@ -1,0 +1,188 @@
+class RaceLawn extends Phaser.Scene {
+
+  constructor()
+  {
+      super('RaceLawn');
+  }
+  init(data) {
+    this.level = data.level;
+    this.gameOver = false;
+  }
+
+  collideZone(player, zone) {
+    if (zone.name === "end") {
+      this.scene.start('KormanQuad');
+
+    }
+  }
+
+  nearNpc(player, npc)
+  {
+    this.incrPlayerInfectionLevel(npc.getData("mask") ? 0.5 : 1.5);
+  }
+
+  create(data)  {
+    this.add.image(400, 300, "background3").setDisplaySize(800, 600);
+
+    const barriers = this.physics.add.staticGroup();
+    barriers.create(613, 29).setSize(135, 77);
+    barriers.create(560, 211).setSize(50, 100);
+    barriers.create(598, 218).setSize(39, 67);
+    barriers.create(612, 338).setSize(40, 40);
+    barriers.create(573, 424).setSize(40, 40);
+    barriers.create(707, 446).setSize(40, 40);
+    barriers.create(652, 510).setSize(40, 40);
+    barriers.create(532, 70).setSize(40, 40);
+    barriers.create(301, 21).setSize(40, 40);
+    barriers.create(87, 85).setSize(40, 40);
+    barriers.create(305, 81).setSize(97, 67);
+    barriers.create(333, 162).setSize(68, 105);
+    barriers.create(305, 81).setSize(97, 67);
+    barriers.create(374, 290).setSize(136, 213);
+    barriers.create(450, 337).setSize(32, 99);
+    barriers.create(301, 249).setSize(39, 106);
+    barriers.create(423, 463).setSize(77, 135);
+    barriers.create(383, 510).setSize(48, 55);
+    barriers.create(141, 429).setSize(69, 196);
+    barriers.create(91, 500).setSize(58, 42);
+    barriers.create(184, 82).setSize(40, 148);
+    barriers.create(141, 429).setSize(69, 196);
+    barriers.create(103, 222).setSize(135, 94);
+    barriers.create(591, 120).setSize(17, 100);
+    barriers.create(666, 121).setSize(20, 30);
+    barriers.create(434, 138).setSize(13, 59);
+    barriers.create(99, 420).setSize(18, 79);
+    barriers.setVisible(false);
+
+    const zones = this.physics.add.staticGroup();
+    // end zone
+    zones.create(140, 100, "endpoint")
+      .setSize(1, 1)
+      .setDisplaySize(25, 25)
+      .setName("end");
+
+    this.player = this.physics.add.sprite(630, 100, 'player')
+      .setScale(0.25)
+      .setAngle(180)
+      .setCircle(75)
+      .setName("player")
+      .setData("infection_level", 0);
+
+    this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(this.player, barriers);
+    this.physics.add.collider(this.player, zones, (player, zone) => this.collideZone(player, zone));
+
+    const npcs = this.physics.add.staticGroup();
+    npcs.create(742, 150, 'npc1').setScale(0.25).setAngle(270).setCircle(70)
+      .setData("mask", false);
+    npcs.create(275, 490, 'npc2').setScale(0.25).setAngle(0).setCircle(60)
+      .setData("mask", true);
+    npcs.create(200, 415, 'npc3').setScale(0.25).setAngle(90).setCircle(60)
+      .setData("mask", true);
+    npcs.create(775, 514, 'npc1').setScale(0.25).setAngle(180).setCircle(70)
+      .setData("mask", false);
+    npcs.create(545, 289, 'npc2').setScale(0.25).setAngle(270).setCircle(70)
+      .setData("mask", true);  
+    npcs.create(50, 150, 'npc3').setScale(0.25).setAngle(90).setCircle(60)
+      .setData("mask", true);
+    npcs.create(240, 45, 'npc2').setScale(0.25).setAngle(180).setCircle(60)
+      .setData("mask", true);  
+    this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
+
+    this.handsan = this.physics.add.sprite(370, 420, 'handsan').setScale(0.25);
+    this.handsan2 = this.physics.add.sprite(400, 140, 'handsan').setScale(0.25);
+    this.physics.add.overlap(this.player, this.handsan, this.collectHandSanitizer, null, this);
+    this.physics.add.overlap(this.player, this.handsan2, this.collectHandSanitizer, null, this);
+      
+      this.add.image(400, 550, "inf_bar").setScale(2);
+      const infectionTextStyle = {fontSize: "18px", color: "black"};
+      this.add.text(277, 570, "Infection Potential:", infectionTextStyle);
+      this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
+      this.graphics = this.add.graphics();
+
+      this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  incrPlayerInfectionLevel(incr) {
+    if(incr == 0 || this.gameOver) return;
+
+    const drawHealthCircle = health => (
+      this.graphics.fillCircle(412+119*(health/55-1), 550, 14)
+    );
+
+    const inf_level = this.player.getData("infection_level");
+    let new_inf_level = inf_level + incr;
+    this.graphics.fillStyle(0xffff00, 1);
+
+    if(incr > 0) {
+      if(new_inf_level > 100) new_inf_level = 100;
+
+      for(let i = inf_level; i < new_inf_level; i++) {
+        drawHealthCircle(i);
+      }
+    } else {
+      if(new_inf_level < 0) new_inf_level = 0;
+
+      this.graphics.clear();
+      for(let i = 0; i < new_inf_level; i++) {
+        drawHealthCircle(i);
+      }
+    }
+    this.player.setData("infection_level", new_inf_level); 
+  }
+
+  updateGameplay(time, delta) {
+    // player movement
+    if (this.cursors.left.isDown) {
+        this.player.setVelocityX(-160);
+        this.player.setAngle(-90);
+    }
+    else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(160);
+        this.player.setAngle(90);
+    }
+    else {
+        this.player.setVelocityX(0);
+    }
+    if (this.cursors.up.isDown) {
+        this.player.setVelocityY(-160);
+        this.player.setAngle(0);
+    }
+    else if (this.cursors.down.isDown) {
+        this.player.setVelocityY(160);
+        this.player.setAngle(180);
+    }
+    else {
+        this.player.setVelocityY(0);
+    }
+    // endgame check
+    if(this.player.getData("infection_level") >= 100)
+    {
+      this.gameOver = true;
+      this.loseText = this.add.image(400, 300, "losescreen").setDisplaySize(800, 600);
+      this.player.setVelocityX(0).setVelocityY(0);
+    }
+  }
+
+  updateOutOfGame(time, delta) {
+    
+  }
+
+  update(time, delta) {
+    if(!this.gameOver) {
+        this.updateGameplay(time, delta);
+    }
+    else {
+      this.updateOutOfGame(time, delta);
+    }
+
+    this.infectionText.setText(`${this.player.getData("infection_level")}%`);
+  }
+
+  collectHandSanitizer (player, handsan)
+  {
+      handsan.destroy();
+      this.incrPlayerInfectionLevel(-100);
+  }
+
+}

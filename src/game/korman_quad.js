@@ -15,17 +15,20 @@ class KormanQuad extends Phaser.Scene {
         this.load.image("inf_bar", "../assets/icons/infection_bar.svg");
         this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
         this.load.image("endpoint", "../assets/icons/endpoint.svg");
-        this.load.image("losescreen", "../assets/end/losescreen.png")
+        this.load.image("losescreen", "../assets/end/losescreen.png");
     }
 
     init(data) {
-
       this.gameOver = false;
+      this.level = data.level;
     }
 
     collideZone(player, zone) {
         if(zone.name === "end") {
-            this.scene.start('LancasterWalk');
+          if(this.level)
+            this.scene.start('LancasterWalk', { level: this.level });
+          else
+            this.scene.start('LancasterWalk', { level: 1 });
             //this.add.text(400, 300, "You Win!", { fontSize: "24px", color: "green" });
             //this.gameOver = true;
             //this.player.setVelocityX(0).setVelocityY(0);
@@ -167,7 +170,7 @@ class KormanQuad extends Phaser.Scene {
 
     collectHandSanitizer (player, handsan)
     {
-        this.handsan.destroy();
+        handsan.destroy();
         this.incrPlayerInfectionLevel(-100);
     }
 }

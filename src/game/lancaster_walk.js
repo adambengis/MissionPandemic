@@ -1,5 +1,3 @@
-
-
 class LancasterWalk extends Phaser.Scene {
 
   constructor()
@@ -8,16 +6,12 @@ class LancasterWalk extends Phaser.Scene {
   }
   init(data) {
     this.gameOver = false;
+    this.level = data.level;
   }
 
   collideZone(player, zone) {
     if (zone.name === "end") {
-      this.add.text(400, 300, "You Win!", {
-        fontSize: "24px",
-        color: "green"
-      });
-      this.gameOver = true;
-      this.player.setVelocityX(0).setVelocityY(0);
+      this.scene.start('RaceLawn', { level: this.level });
 
     }
   }
@@ -150,7 +144,7 @@ class LancasterWalk extends Phaser.Scene {
     if(this.player.getData("infection_level") >= 100)
     {
       this.gameOver = true;
-      this.loseText = this.add.text(400, 300, "You Lost!", { fontSize: "24px", color: "red" });
+      this.loseText = this.add.image(400, 300, "losescreen").setDisplaySize(800, 600);
       this.player.setVelocityX(0).setVelocityY(0);
     }
   }
@@ -172,7 +166,7 @@ class LancasterWalk extends Phaser.Scene {
 
   collectHandSanitizer (player, handsan)
   {
-      this.handsan.destroy();
+      handsan.destroy();
       this.incrPlayerInfectionLevel(-100);
   }
 
