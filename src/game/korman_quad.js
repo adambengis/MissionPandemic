@@ -126,7 +126,6 @@ class KormanQuad extends Phaser.Scene {
     }
 
     updateGameplay(time, delta) {
-      console.log(this.level);
       // player movement
       if (this.cursors.left.isDown) {
           this.player.setVelocityX(-160);
