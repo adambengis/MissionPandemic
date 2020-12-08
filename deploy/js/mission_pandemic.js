@@ -81,6 +81,7 @@ class KormanQuad extends Phaser.Scene {
         this.load.image("handsan", "../assets/icons/hand_sanitizer.svg")
         this.load.image("endpoint", "../assets/icons/endpoint.svg");
         this.load.image("losescreen", "../assets/end/losescreen.png");
+        this.load.image("cloud", "../assets/backgrounds/Infection_Cloud.svg");
     }
 
     init(data) {
@@ -142,57 +143,81 @@ class KormanQuad extends Phaser.Scene {
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", false);
-        this.tweens.add({
-          targets: npc1,
-          props: {
-            y: { from: npc1.y, to: npc1.y+100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+        
         const npc2 = npcs.create(295, 402, 'npc2')
           .setScale(0.25)
           .setAngle(0)          
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", true);
-        this.tweens.add({
-          targets: npc2,
-          props: {
-            y: { from: npc2.y, to: npc2.y-100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+
         const npc3 = npcs.create(345, 376, 'npc3')
           .setScale(0.25)
           .setAngle(45)
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", true);
-        this.tweens.add({
-          targets: npc3,
-          props: {
-            x: { from: npc3.x, to: npc3.x+100 },
-            y: { from: npc3.y, to: npc3.y-40 },
-            // flipX, flipY called per attribute
-            fake: {from: 0, to: 0}
-          },
-          flipX: true,
-          flipY: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+
+
+        const clouds = this.physics.add.group();
+        const cloud1 = clouds.create(302, 144, 'cloud')
+          .setScale(0.25)
+          .setAngle(180)
+          .setOffset(-75, -75)
+          .setCircle(150)
+          .setData("mask", false);
+        const cloud2 = clouds.create(295, 402, 'cloud')
+          .setScale(0.25)
+          .setAngle(0)          
+          .setOffset(-75, -75)
+          .setCircle(150)
+          .setData("mask", false);
+        const cloud3 = clouds.create(345, 376, 'cloud')
+          .setScale(0.25)
+          .setAngle(45)
+          .setOffset(-75, -75)
+          .setCircle(150)
+          .setData("mask", false);
+          this.tweens.add({
+            targets: [npc1, cloud1],
+            props: {
+              y: { from: npc1.y, to: npc1.y+100 },
+            },
+            flipY: true,
+            flipX: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
+          this.tweens.add({
+            targets: [npc2, cloud2],
+            props: {
+              y: { from: npc2.y, to: npc2.y-100 },
+            },
+            flipY: true,
+            flipX: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
+          this.tweens.add({
+            targets: [npc3, cloud3],
+            props: {
+              x: { from: npc3.x, to: npc3.x+100 },
+              y: { from: npc3.y, to: npc3.y-40 },
+              // flipX, flipY called per attribute
+              fake: {from: 0, to: 0}
+            },
+            flipX: true,
+            flipY: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
+
         this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
         this.handsan = this.physics.add.sprite(470, 520, 'handsan').setScale(0.25);
@@ -366,8 +391,69 @@ class LancasterWalk extends Phaser.Scene {
         .setOffset(-75, -75)
         .setCircle(150)
         .setData("mask", false);
+
+      const npc2 = npcs.create(270, 305, 'npc1')
+        .setScale(0.25)
+        .setAngle(90)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
+
+      const npc3 = npcs.create(370, 260, 'npc3')
+        .setScale(0.25)
+        .setAngle(-50)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", true);
+
+      const npc4 = npcs.create(560, 150, 'npc2')
+        .setScale(0.25)
+        .setAngle(-90)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", true);
+
+      const npc5 = npcs.create(475, 315, 'npc2')
+        .setScale(0.25)
+        .setAngle(135)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", true);
+                              
+
+      const clouds = this.physics.add.group();
+      const cloud1 = clouds.create(620, 160, 'cloud')
+        .setScale(0.25)
+        .setAngle(170)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
+      const cloud2 = clouds.create(270, 305, 'cloud')
+        .setScale(0.25)
+        .setAngle(90)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
+      const cloud3 = clouds.create(370, 260, 'cloud')
+        .setScale(0.25)
+        .setAngle(-50)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
+      const cloud4 = clouds.create(560, 150, 'cloud')
+        .setScale(0.25)
+        .setAngle(-90)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
+      const cloud5 = clouds.create(475, 315, 'cloud')
+        .setScale(0.25)
+        .setAngle(135)
+        .setOffset(-75, -75)
+        .setCircle(150)
+        .setData("mask", false);
       this.tweens.add({
-        targets: npc1,
+        targets: [npc1, cloud1],
         props: {
           y: { from: npc1.y, to: npc1.y+80 },
           x: { from: npc1.x, to: npc1.x+30 },
@@ -380,14 +466,8 @@ class LancasterWalk extends Phaser.Scene {
         repeat: -1,       
         yoyo: true
       });
-      const npc2 = npcs.create(270, 305, 'npc1')
-        .setScale(0.25)
-        .setAngle(90)
-        .setOffset(-75, -75)
-        .setCircle(150)
-        .setData("mask", false);
       this.tweens.add({
-        targets: npc2,
+        targets: [npc2, cloud2],
         props: {
           x: { from: npc2.x, to: npc2.x+100 },
         },
@@ -398,14 +478,8 @@ class LancasterWalk extends Phaser.Scene {
         repeat: -1,       
         yoyo: true
       });
-      const npc3 = npcs.create(370, 260, 'npc3')
-        .setScale(0.25)
-        .setAngle(-50)
-        .setOffset(-75, -75)
-        .setCircle(150)
-        .setData("mask", true);
       this.tweens.add({
-        targets: npc3,
+        targets: [npc3, cloud3],
         props: {
           y: { from: npc3.y, to: npc3.y-40 },
           x: { from: npc3.x, to: npc3.x-100 },
@@ -418,14 +492,8 @@ class LancasterWalk extends Phaser.Scene {
         repeat: -1,       
         yoyo: true
       });
-      const npc4 = npcs.create(560, 150, 'npc2')
-        .setScale(0.25)
-        .setAngle(-90)
-        .setOffset(-75, -75)
-        .setCircle(150)
-        .setData("mask", true);
       this.tweens.add({
-        targets: npc4,
+        targets: [npc4, cloud4],
         props: {
           x: { from: npc4.x, to: npc4.x-120 },
         },
@@ -436,14 +504,8 @@ class LancasterWalk extends Phaser.Scene {
         repeat: -1,       
         yoyo: true
       });
-      const npc5 = npcs.create(475, 315, 'npc2')
-        .setScale(0.25)
-        .setAngle(135)
-        .setOffset(-75, -75)
-        .setCircle(150)
-        .setData("mask", true);
       this.tweens.add({
-        targets: npc5,
+        targets: [npc5, cloud5],
         props: {
           y: { from: npc5.y, to: npc5.y+70 },
           x: { from: npc5.x, to: npc5.x+130 },
@@ -456,6 +518,8 @@ class LancasterWalk extends Phaser.Scene {
         repeat: -1,       
         yoyo: true
       });
+
+
       this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
       this.handsan = this.physics.add.sprite(35, 580, 'handsan').setScale(0.20);

@@ -78,57 +78,21 @@ class KormanQuad extends Phaser.Scene {
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", false);
-        this.tweens.add({
-          targets: npc1,
-          props: {
-            y: { from: npc1.y, to: npc1.y+100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+        
         const npc2 = npcs.create(295, 402, 'npc2')
           .setScale(0.25)
           .setAngle(0)          
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", true);
-        this.tweens.add({
-          targets: npc2,
-          props: {
-            y: { from: npc2.y, to: npc2.y-100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+
         const npc3 = npcs.create(345, 376, 'npc3')
           .setScale(0.25)
           .setAngle(45)
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", true);
-        this.tweens.add({
-          targets: npc3,
-          props: {
-            x: { from: npc3.x, to: npc3.x+100 },
-            y: { from: npc3.y, to: npc3.y-40 },
-            // flipX, flipY called per attribute
-            fake: {from: 0, to: 0}
-          },
-          flipX: true,
-          flipY: true,
-          ease: 'Linear',      
-          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
-          repeat: -1,       
-          yoyo: true
-        });
+
 
         const clouds = this.physics.add.group();
         const cloud1 = clouds.create(302, 144, 'cloud')
@@ -137,57 +101,57 @@ class KormanQuad extends Phaser.Scene {
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", false);
-        this.tweens.add({
-          targets: cloud1,
-          props: {
-            y: { from: cloud1.y, to: cloud1.y+100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: 1800 - this.level * 400,
-          repeat: -1,       
-          yoyo: true
-        });
         const cloud2 = clouds.create(295, 402, 'cloud')
           .setScale(0.25)
           .setAngle(0)          
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", false);
-        this.tweens.add({
-          targets: cloud2,
-          props: {
-            y: { from: cloud2.y, to: cloud2.y-100 },
-          },
-          flipY: true,
-          flipX: true,
-          ease: 'Linear',      
-          duration: 1800 - this.level * 400,
-          repeat: -1,       
-          yoyo: true
-        });
         const cloud3 = clouds.create(345, 376, 'cloud')
           .setScale(0.25)
           .setAngle(45)
           .setOffset(-75, -75)
           .setCircle(150)
           .setData("mask", false);
-        this.tweens.add({
-          targets: cloud3,
-          props: {
-            x: { from: cloud3.x, to: cloud3.x+100 },
-            y: { from: cloud3.y, to: cloud3.y-40 },
-            // flipX, flipY called per attribute
-            fake: {from: 0, to: 0}
-          },
-          flipX: true,
-          flipY: true,
-          ease: 'Linear',      
-          duration: 1800 - this.level * 400,
-          repeat: -1,       
-          yoyo: true
-        });
+          this.tweens.add({
+            targets: [npc1, cloud1],
+            props: {
+              y: { from: npc1.y, to: npc1.y+100 },
+            },
+            flipY: true,
+            flipX: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
+          this.tweens.add({
+            targets: [npc2, cloud2],
+            props: {
+              y: { from: npc2.y, to: npc2.y-100 },
+            },
+            flipY: true,
+            flipX: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
+          this.tweens.add({
+            targets: [npc3, cloud3],
+            props: {
+              x: { from: npc3.x, to: npc3.x+100 },
+              y: { from: npc3.y, to: npc3.y-40 },
+              // flipX, flipY called per attribute
+              fake: {from: 0, to: 0}
+            },
+            flipX: true,
+            flipY: true,
+            ease: 'Linear',      
+            duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+            repeat: -1,       
+            yoyo: true
+          });
 
         this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
