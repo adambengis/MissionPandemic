@@ -75,14 +75,23 @@ class RaceLawn extends Phaser.Scene {
     this.physics.add.collider(this.player, zones, (player, zone) => this.collideZone(player, zone));
 
     const npcs = this.physics.add.group();
+    const clouds = this.physics.add.group();
     const npc1 = npcs.create(726, 150, 'npc1')
       .setScale(0.25)
       .setAngle(170)
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", false);
+
+    const cloud1 = npcs.create(726, 150, 'cloud')
+      .setScale(0.25)
+      .setAngle(170)
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
+
     this.tweens.add({
-      targets: npc1,
+      targets: [npc1, cloud1],
       props: {
         y: { from: npc1.y, to: npc1.y+150 },
         x: { from: npc1.x, to: npc1.x+20 },
@@ -101,8 +110,16 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", true);
+
+    const cloud2 = clouds.create(265, 435, 'cloud')
+      .setScale(0.25)
+      .setAngle(160)
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
+
     this.tweens.add({
-      targets: npc2,
+      targets: [npc2, cloud2],
       props: {
         y: { from: npc2.y, to: npc2.y+100 },
         x: { from: npc2.x, to: npc2.x+20 },
@@ -121,8 +138,15 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)    
       .setCircle(150)
       .setData("mask", true);
+
+     const cloud3 = clouds.create(50, 455, 'cloud')
+      .setScale(0.25)
+      .setAngle(0)          
+      .setOffset(-75, -75)    
+      .setCircle(150)
+      .setData("mask", false);
     this.tweens.add({
-      targets: npc3,
+      targets: [npc3, cloud3],
       props: {
         y: { from: npc3.y, to: npc3.y-130 },
       },
@@ -139,8 +163,15 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", false);
+
+    const cloud4 = clouds.create(775, 514, 'cloud')
+      .setScale(0.25)
+      .setAngle(-10)          
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
     this.tweens.add({
-      targets: npc4,
+      targets: [npc4, cloud4],
       props: {
         y: { from: npc4.y, to: npc4.y-150 },
         x: { from: npc4.x, to: npc4.x-20 },
@@ -159,8 +190,15 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", true);  
+
+    const cloud5 = clouds.create(545, 289, 'cloud')
+      .setScale(0.25)
+      .setAngle(270)          
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
     this.tweens.add({
-      targets: npc5,
+      targets: [npc5, cloud5],
       props: {
         x: { from: npc5.x, to: npc5.x-50 },
       },
@@ -177,8 +215,16 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", true);
+
+    const cloud6 = clouds.create(35, 150, 'cloud')
+      .setScale(0.25)
+      .setAngle(90)          
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
+
     this.tweens.add({
-      targets: npc6,
+      targets: [npc6, cloud6],
       props: {
         x: { from: npc6.x, to: npc6.x+80 },
       },
@@ -195,8 +241,16 @@ class RaceLawn extends Phaser.Scene {
       .setOffset(-75, -75)
       .setCircle(150)
       .setData("mask", true); 
+
+    const cloud7 = clouds.create(240, 45, 'cloud')
+      .setScale(0.25)
+      .setAngle(180)          
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", false);
+
     this.tweens.add({
-      targets: npc7,
+      targets: [npc7, cloud7],
       props: {
         y: { from: npc7.y, to: npc7.y+150 },
       },
