@@ -167,7 +167,8 @@ class KormanQuad extends Phaser.Scene {
         
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red" });
+        this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red", backgroundColor: "white"});
+        this.add.text(110, 30, "OBJECTIVE: Get to the Korman Center", { fontSize: "26px", color: "lightblue", backgroundColor:"blue" })
     }
 
     incrPlayerInfectionLevel(incr) {
