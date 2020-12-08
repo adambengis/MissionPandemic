@@ -36,8 +36,8 @@ class KormanQuad extends Phaser.Scene {
 
     nearNpc(player, npc)
     {
-      const pain = npc.getData("mask") ? 0.25 : 0.4;
-      this.incrPlayerInfectionLevel(pain * (1 + this.level / 4));
+      const pain = npc.getData("mask") ? NPC_INFECTION_MASK_INCR : NPC_INFECTION_INCR;
+      this.incrPlayerInfectionLevel(pain * this.level * NPC_INFECTION_MULT);
     }
 
     create(data)  {
@@ -85,7 +85,7 @@ class KormanQuad extends Phaser.Scene {
           flipY: true,
           flipX: true,
           ease: 'Linear',      
-          duration: 1800 - this.level * 400,
+          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
           repeat: -1,       
           yoyo: true
         });
@@ -103,7 +103,7 @@ class KormanQuad extends Phaser.Scene {
           flipY: true,
           flipX: true,
           ease: 'Linear',      
-          duration: 1800 - this.level * 400,
+          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
           repeat: -1,       
           yoyo: true
         });
@@ -124,7 +124,7 @@ class KormanQuad extends Phaser.Scene {
           flipX: true,
           flipY: true,
           ease: 'Linear',      
-          duration: 1800 - this.level * 400,
+          duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
           repeat: -1,       
           yoyo: true
         });

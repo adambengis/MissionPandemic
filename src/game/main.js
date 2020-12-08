@@ -21,6 +21,17 @@ const config = {
     }
 };
 
+// time (ms) for npc to move through one loop
+const INITIAL_MOVE_TIME = 2000;
+// npc loops speed up by this much time
+const MOVE_TIME_DECR = 200;
+// per-update infection level increase when near npc
+const NPC_INFECTION_INCR = 0.5;
+// infection level that masked npcs inflict
+const NPC_INFECTION_MASK_INCR = 0.25;
+// npc infection level multiplier per level
+const NPC_INFECTION_MULT = 1.2;
+
 
 // Create the game with our config values
 // this will also inject our canvas element into the HTML source 

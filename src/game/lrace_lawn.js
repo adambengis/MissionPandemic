@@ -19,8 +19,8 @@ class RaceLawn extends Phaser.Scene {
 
   nearNpc(player, npc)
   {
-      const pain = npc.getData("mask") ? 0.25 : 0.4;
-      this.incrPlayerInfectionLevel(pain * (1 + this.level / 4));
+    const pain = npc.getData("mask") ? NPC_INFECTION_MASK_INCR : NPC_INFECTION_INCR;
+    this.incrPlayerInfectionLevel(pain * this.level * NPC_INFECTION_MULT);
   }
 
   create(data)  {
@@ -74,21 +74,139 @@ class RaceLawn extends Phaser.Scene {
     this.physics.add.collider(this.player, barriers);
     this.physics.add.collider(this.player, zones, (player, zone) => this.collideZone(player, zone));
 
-    const npcs = this.physics.add.staticGroup();
-    npcs.create(742, 150, 'npc1').setScale(0.25).setAngle(270).setCircle(70)
+    const npcs = this.physics.add.group();
+    const npc1 = npcs.create(726, 150, 'npc1')
+      .setScale(0.25)
+      .setAngle(170)
+      .setOffset(-75, -75)
+      .setCircle(150)
       .setData("mask", false);
-    npcs.create(275, 490, 'npc2').setScale(0.25).setAngle(0).setCircle(60)
+    this.tweens.add({
+      targets: npc1,
+      props: {
+        y: { from: npc1.y, to: npc1.y+150 },
+        x: { from: npc1.x, to: npc1.x+20 },
+        fake: { from: 0, to: 0 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc2 = npcs.create(265, 435, 'npc2')
+      .setScale(0.25)
+      .setAngle(160)
+      .setOffset(-75, -75)
+      .setCircle(150)
       .setData("mask", true);
-    npcs.create(200, 415, 'npc3').setScale(0.25).setAngle(90).setCircle(60)
+    this.tweens.add({
+      targets: npc2,
+      props: {
+        y: { from: npc2.y, to: npc2.y+100 },
+        x: { from: npc2.x, to: npc2.x+20 },
+        fake: { from: 0, to: 0 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc3 = npcs.create(50, 455, 'npc3')
+      .setScale(0.25)
+      .setAngle(0)          
+      .setOffset(-75, -75)    
+      .setCircle(150)
       .setData("mask", true);
-    npcs.create(775, 514, 'npc1').setScale(0.25).setAngle(180).setCircle(70)
+    this.tweens.add({
+      targets: npc3,
+      props: {
+        y: { from: npc3.y, to: npc3.y-130 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc4 = npcs.create(775, 514, 'npc1')
+      .setScale(0.25)
+      .setAngle(-10)          
+      .setOffset(-75, -75)
+      .setCircle(150)
       .setData("mask", false);
-    npcs.create(545, 289, 'npc2').setScale(0.25).setAngle(270).setCircle(70)
+    this.tweens.add({
+      targets: npc4,
+      props: {
+        y: { from: npc4.y, to: npc4.y-150 },
+        x: { from: npc4.x, to: npc4.x-20 },
+        fake: { from: 0, to: 0 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc5 = npcs.create(545, 289, 'npc2')
+      .setScale(0.25)
+      .setAngle(270)          
+      .setOffset(-75, -75)
+      .setCircle(150)
       .setData("mask", true);  
-    npcs.create(50, 150, 'npc3').setScale(0.25).setAngle(90).setCircle(60)
+    this.tweens.add({
+      targets: npc5,
+      props: {
+        x: { from: npc5.x, to: npc5.x-50 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc6 = npcs.create(35, 150, 'npc3')
+      .setScale(0.25)
+      .setAngle(90)          
+      .setOffset(-75, -75)
+      .setCircle(150)
       .setData("mask", true);
-    npcs.create(240, 45, 'npc2').setScale(0.25).setAngle(180).setCircle(60)
-      .setData("mask", true);  
+    this.tweens.add({
+      targets: npc6,
+      props: {
+        x: { from: npc6.x, to: npc6.x+80 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    });
+    const npc7 = npcs.create(240, 45, 'npc2')
+      .setScale(0.25)
+      .setAngle(180)          
+      .setOffset(-75, -75)
+      .setCircle(150)
+      .setData("mask", true); 
+    this.tweens.add({
+      targets: npc7,
+      props: {
+        y: { from: npc7.y, to: npc7.y+150 },
+      },
+      flipY: true,
+      flipX: true,
+      ease: 'Linear',      
+      duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
+      repeat: -1,       
+      yoyo: true
+    }); 
     this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
     this.handsan = this.physics.add.sprite(370, 420, 'handsan').setScale(0.25);
