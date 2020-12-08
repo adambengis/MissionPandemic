@@ -220,7 +220,8 @@ class RaceLawn extends Phaser.Scene {
     this.infectionText = this.add.text(500, 570, "0%", infectionTextStyle);
     this.graphics = this.add.graphics();
 
-    this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red" });
+    this.add.text(700, 20, "Day: " + this.level , { fontSize: "24px", color: "red", backgroundColor: "white"});
+    this.add.text(150, 30, "OBJECTIVE: Get to Ross Commons", { fontSize: "26px", color: "lightpink", backgroundColor:"red" })
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
