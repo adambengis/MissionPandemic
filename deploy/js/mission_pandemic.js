@@ -91,7 +91,6 @@ class KormanQuad extends Phaser.Scene {
       {
         this.level = 1;
       }
-      
     }
 
     collideZone(player, zone) {
@@ -188,7 +187,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
           this.tweens.add({
             targets: [npc2, cloud2],
@@ -200,7 +200,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
           this.tweens.add({
             targets: [npc3, cloud3],
@@ -215,7 +216,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
 
         this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
@@ -465,7 +467,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc2, cloud2],
@@ -477,7 +480,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc3, cloud3],
@@ -491,7 +495,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc4, cloud4],
@@ -503,7 +508,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc5, cloud5],
@@ -517,7 +523,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
 
 
@@ -717,7 +724,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc2 = npcs.create(265, 435, 'npc2')
       .setScale(0.25)
@@ -737,7 +745,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc3 = npcs.create(50, 455, 'npc3')
       .setScale(0.25)
@@ -755,7 +764,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc4 = npcs.create(775, 514, 'npc1')
       .setScale(0.25)
@@ -775,7 +785,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc5 = npcs.create(545, 289, 'npc2')
       .setScale(0.25)
@@ -793,7 +804,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc6 = npcs.create(35, 150, 'npc3')
       .setScale(0.25)
@@ -811,7 +823,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc7 = npcs.create(240, 45, 'npc2')
       .setScale(0.25)
@@ -829,7 +842,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     }); 
     this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
@@ -958,6 +972,8 @@ const config = {
 
 // time (ms) for npc to move through one loop
 const INITIAL_MOVE_TIME = 2000;
+// npc start of walk staggering max time
+const MOVE_STAGGER = 100;
 // npc loops speed up by this much time
 const MOVE_TIME_DECR = 200;
 // per-update infection level increase when near npc
@@ -966,6 +982,8 @@ const NPC_INFECTION_INCR = 0.5;
 const NPC_INFECTION_MASK_INCR = 0.25;
 // npc infection level multiplier per level
 const NPC_INFECTION_MULT = 1.2;
+
+const onTweenStart = (tween) => tween.setTimeScale(0.9+Phaser.Math.Between(0, 10) / 10);
 
 
 // Create the game with our config values

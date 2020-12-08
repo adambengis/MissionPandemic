@@ -143,7 +143,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc2, cloud2],
@@ -155,7 +156,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc3, cloud3],
@@ -169,7 +171,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc4, cloud4],
@@ -181,7 +184,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
       this.tweens.add({
         targets: [npc5, cloud5],
@@ -195,7 +199,8 @@ class LancasterWalk extends Phaser.Scene {
         ease: 'Linear',      
         duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
         repeat: -1,       
-        yoyo: true
+        yoyo: true,
+        onStart: onTweenStart,
       });
 
 

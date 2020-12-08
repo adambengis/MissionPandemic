@@ -26,7 +26,6 @@ class KormanQuad extends Phaser.Scene {
       {
         this.level = 1;
       }
-      
     }
 
     collideZone(player, zone) {
@@ -123,7 +122,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
           this.tweens.add({
             targets: [npc2, cloud2],
@@ -135,7 +135,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
           this.tweens.add({
             targets: [npc3, cloud3],
@@ -150,7 +151,8 @@ class KormanQuad extends Phaser.Scene {
             ease: 'Linear',      
             duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
             repeat: -1,       
-            yoyo: true
+            yoyo: true,
+            onStart: onTweenStart,
           });
 
         this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));

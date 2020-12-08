@@ -93,7 +93,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc2 = npcs.create(265, 435, 'npc2')
       .setScale(0.25)
@@ -113,7 +114,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc3 = npcs.create(50, 455, 'npc3')
       .setScale(0.25)
@@ -131,7 +133,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc4 = npcs.create(775, 514, 'npc1')
       .setScale(0.25)
@@ -151,7 +154,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc5 = npcs.create(545, 289, 'npc2')
       .setScale(0.25)
@@ -169,7 +173,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc6 = npcs.create(35, 150, 'npc3')
       .setScale(0.25)
@@ -187,7 +192,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     });
     const npc7 = npcs.create(240, 45, 'npc2')
       .setScale(0.25)
@@ -205,7 +211,8 @@ class RaceLawn extends Phaser.Scene {
       ease: 'Linear',      
       duration: INITIAL_MOVE_TIME - this.level * MOVE_TIME_DECR,
       repeat: -1,       
-      yoyo: true
+      yoyo: true,
+      onStart: onTweenStart,
     }); 
     this.physics.add.overlap(this.player, npcs, (player, npc) => this.nearNpc(player, npc));
 
